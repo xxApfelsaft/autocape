@@ -1,0 +1,18 @@
+services:
+  cape-generator:
+    build: .
+    container_name: cape-generator
+    restart: unless-stopped
+    networks:
+      - npm-net
+    volumes:
+      - ./config.json:/app/config.json:ro
+      - ./results:/app/results
+      - ./uploads:/app/uploads
+    # Falls der Port auch direkt am Host erreichbar sein soll:
+    # ports:
+    #   - "3000:3000"
+
+networks:
+  npm-net:
+    external: true

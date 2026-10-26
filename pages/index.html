@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autocape</title>
-    <link rel="icon" type="image/x-icon" href="https://slashonline.net/media/favicon.png">
+    <title>Cape Generator</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%2312AEE8%22/><text x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2260%22 font-weight=%22bold%22 fill=%22white%22>C</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <meta name="theme-color" content="#04031A">
-    <meta name="description" content="Autocape. Minecraft capes made easily, efficiently and for free. Move away from the ads and create your capes in real time to wear in Minecraft. 3 clicks and you're done.">
+    <meta name="description" content="Minecraft capes made easily, efficiently and for free. Create your capes in real time to wear in Minecraft.">
     <meta name="keywords" content="minecraft,cape,minecraft cape,free cape,free minecraft cape,minecraft cape maker,cape maker,minecraft cape creator,cape creator,minecraft cape generator,cape generator,minecraft cape editor,cape editor">
-    <meta name="author" content="Felixmax_">
-    <meta property="og:title" content="Autocape.app - Make a Cape from an Image!">
-    <meta property="og:description" content="Autocape. Minecraft capes made easily, efficiently and for free. Move away from the ads and create your capes in real time to wear in Minecraft. 3 clicks and you're done.">
+    <meta property="og:title" content="Cape Generator - Make a Cape from an Image!">
+    <meta property="og:description" content="Minecraft capes made easily, efficiently and for free. Create your capes in real time to wear in Minecraft.">
     <style>
         * { 
             font-family: Poppins, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -45,7 +44,9 @@
         </div>
 
         <div class="mx-auto">
-            <img src="https://media.autocape.app/media/n7leGMmIzGlOloDzB4X580ECB1783358474181/iGZHfHlfNs3376.png" alt="Autocape Logo" class="h-10 object-contain">
+            <a href="/" class="flex items-center gap-2.5 text-white font-bold text-xl tracking-wide hover:opacity-90 transition-opacity no-underline">
+                <span class="bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent">Cape Generator</span>
+            </a>
         </div>
     </div>
 
@@ -67,7 +68,7 @@
                 Click here to
                 <div class="upload-text-glow text-[#11BCF8] text-lg font-semibold">UPLOAD</div>
             </div>
-            <input id="selectors" class="hidden" type="file" accept="image/png, image/jpeg">
+            <input id="selectors" class="hidden" type="file" accept="image/png, image/jpeg, image/gif">
         </label>
     </div>
 
@@ -93,20 +94,20 @@
                         const fileList = file;
                         console.log(fileList);
 
-                        if (fileList.size > 3000000) {
+                        if (fileList.size > 25000000) {
                             uist.style.visibility = 'visible';
-                            uist.innerHTML = 'File is too big! (Max 3MB)';
+                            uist.innerHTML = 'File is too big! (Max 25MB)';
                             uist.style.color = 'red';
                             uist.classList.add('animate-pulse');
                             return;
                         }
 
-                        if (fileList.type == 'image/png' || fileList.type == 'image/jpeg') {
+                        if (fileList.type == 'image/png' || fileList.type == 'image/jpeg' || fileList.type == 'image/gif') {
                             bombimage = fileList;
                         } else {
                             uist.style.visibility = 'visible';
                             uistb.style.visibility = 'visible';
-                            uist.innerHTML = 'File is not a png or jpg!';
+                            uist.innerHTML = 'File is not a PNG, JPG or GIF!';
                             uist.style.color = 'red';
                             uist.classList.add('animate-pulse');
                             return;
@@ -115,7 +116,7 @@
                         var formData = new FormData();
                         formData.append('file', fileList);
                         var request = new XMLHttpRequest();
-                        request.open('POST', 'https://media.autocape.app/upload');
+                        request.open('POST', '/upload');
                         console.log(formData);
                         request.send(formData);
                         request.onreadystatechange = function () {
@@ -126,7 +127,7 @@
                                 uist.innerHTML = 'Success!';
                                 uist.style.color = 'green';
                                 uist.classList.remove('animate-pulse');
-                                window.location.href = '/resize?img=' + 'https://media.autocape.app/media/' + path;
+                                window.location.href = '/resize?img=' + encodeURIComponent('/media/' + path);
                             } else if (this.readyState == 4 && this.status == 429) {
                                 uist.style.visibility = 'visible';
                                 uist.innerHTML = 'Error! you are being ratelimited!';
@@ -164,19 +165,19 @@
                 return;
             }
 
-            if (fileList[0].size > 3000000) {
-                uist.innerHTML = 'File is too big! (Max 3MB)';
+            if (fileList[0].size > 25000000) {
+                uist.innerHTML = 'File is too big! (Max 25MB)';
                 uist.style.color = 'red';
                 uist.classList.add('animate-pulse');
                 return;
             }
 
-            if (fileList[0].type == 'image/png' || fileList[0].type == 'image/jpeg') {
+            if (fileList[0].type == 'image/png' || fileList[0].type == 'image/jpeg' || fileList[0].type == 'image/gif') {
                 bombimage = fileList[0];
             } else {
                 uist.style.visibility = 'visible';
                 uistb.style.visibility = 'visible';
-                uist.innerHTML = 'File is not a png or jpg!';
+                uist.innerHTML = 'File is not a PNG, JPG or GIF!';
                 uist.style.color = 'red';
                 uist.classList.add('animate-pulse');
                 return;
@@ -185,7 +186,7 @@
             var formData = new FormData();
             formData.append('file', fileList[0]);
             var request = new XMLHttpRequest();
-            request.open('POST', 'https://media.autocape.app/upload');
+            request.open('POST', '/upload');
             console.log(formData);
             request.send(formData);
             request.onreadystatechange = function () {
@@ -196,7 +197,7 @@
                     uist.innerHTML = 'Success!';
                     uist.style.color = 'green';
                     uist.classList.remove('animate-pulse');
-                    window.location.href = '/resize?img=' + 'https://media.autocape.app/media/' + path;
+                    window.location.href = '/resize?img=' + encodeURIComponent('/media/' + path);
                 } else if (this.readyState == 4 && this.status == 429) {
                     uist.style.visibility = 'visible';
                     uist.innerHTML = 'Error! you are being ratelimited!';
