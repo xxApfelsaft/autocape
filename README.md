@@ -1,3 +1,8 @@
+# this sht was already vibecoded so i just continued vibecoding everything it was missing because why should I go to the trouble of continuing to maintain it
+
+# I probaly also wont fix any reported issues because once again why should i maintain vibeslop
+
+
 # Minecraft Cape Generator
 
 Automatic Minecraft cape and elytra generator.   
